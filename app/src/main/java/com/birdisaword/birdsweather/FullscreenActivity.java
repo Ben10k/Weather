@@ -228,6 +228,12 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
         try {
             addresses = geo.getFromLocation(latitude, longitude, 1);
             city = addresses.get(0).getLocality();
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+            dlgAlert.setMessage(city);
+            dlgAlert.setTitle("App Title");
+            dlgAlert.setPositiveButton("OK", null);
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
         } catch (IOException e) {
         }
     }
