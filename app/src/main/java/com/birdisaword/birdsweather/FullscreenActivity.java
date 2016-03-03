@@ -69,16 +69,21 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(provider);
+        provider = locationManager.getBestProvider(criteria, true);
 
 
-        if (location != null) {
-            onLocationChanged(location);
+        Location myLocation = getLastKnownLocation();
+
+
+
+
+        if (myLocation != null) {
+            onLocationChanged(myLocation);
         } else {
+
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Priv");
-            dlgAlert.setTitle("App Title");
+            dlgAlert.setMessage("Provider " + provider + " has been selected.");
+            dlgAlert.setTitle("Dabartinis miestas");
             dlgAlert.setPositiveButton("OK", null);
             dlgAlert.setCancelable(true);
             dlgAlert.create().show();
@@ -137,6 +142,28 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
             show();
         }
     }
+
+    //----------------------------------------------------------------------------------------------
+
+    private Location getLastKnownLocation() {
+        LocationManager mLocationManager;
+        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
+
 
     private void hide() {
         // Hide UI first
@@ -230,13 +257,15 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
             city = addresses.get(0).getLocality();
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
             dlgAlert.setMessage(city);
-            dlgAlert.setTitle("App Title");
+            dlgAlert.setTitle("Dabartinis miestas");
             dlgAlert.setPositiveButton("OK", null);
             dlgAlert.setCancelable(true);
             dlgAlert.create().show();
         } catch (IOException e) {
         }
+
     }
+
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
