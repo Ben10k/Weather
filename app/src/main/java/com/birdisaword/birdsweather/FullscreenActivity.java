@@ -37,6 +37,7 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     private double latitude;
     private double longitude;
     private String provider = "aaaa";
+    private String city;
 
 
     /**
@@ -67,9 +68,17 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
         setContentView(R.layout.activity_fullscreen);
 
-        if (getNetworkState(this)){
+        if (!getNetworkState(this)){
+
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("You must be connected to the internet to use this app");
+            dlgAlert.setTitle("Connection problem");
+            dlgAlert.setPositiveButton("OK", null);
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
 
 
+            } else {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
             Criteria criteria = new Criteria();
@@ -78,16 +87,8 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
             Location myLocation = getLastKnownLocation();
 
-
             if (myLocation != null)
                 onLocationChanged(myLocation);
-            } else {
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-                dlgAlert.setMessage("You must be connected to the internet to use this app");
-                dlgAlert.setTitle("Connection problem");
-                dlgAlert.setPositiveButton("OK", null);
-                dlgAlert.setCancelable(true);
-                dlgAlert.create().show();
             }
 
 
@@ -251,7 +252,6 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         Geocoder geo = new Geocoder(this, Locale.getDefault());
-        String city;
         List<Address> addresses;
         // addresses = geo.getFromLocation(latitude, longitude, 1);
         try {
@@ -296,9 +296,9 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
         if(connect != null)
         {
-            NetworkInfo result = connect.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (result != null && result.isConnectedOrConnecting())
-            {
+            NetworkInfo r1 = connect.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo r2 = connect.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            if (r1 != null && r1.isConnectedOrConnecting() || r2 != null && r2.isConnectedOrConnecting())           {
                 return true;
             }
             else
