@@ -2,6 +2,8 @@ package com.birdisaword.birdsweather;
 
 import android.annotation.SuppressLint;
 import android.location.Address;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,29 +67,29 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
         setContentView(R.layout.activity_fullscreen);
 
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, true);
+        if (getNetworkState(this)){
 
 
-        Location myLocation = getLastKnownLocation();
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+            Criteria criteria = new Criteria();
+            provider = locationManager.getBestProvider(criteria, true);
 
 
+            Location myLocation = getLastKnownLocation();
 
 
-        if (myLocation != null) {
-            onLocationChanged(myLocation);
-        } else {
+            if (myLocation != null)
+                onLocationChanged(myLocation);
+            } else {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("You must be connected to the internet to use this app");
+                dlgAlert.setTitle("Connection problem");
+                dlgAlert.setPositiveButton("OK", null);
+                dlgAlert.setCancelable(true);
+                dlgAlert.create().show();
+            }
 
-            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("Provider " + provider + " has been selected.");
-            dlgAlert.setTitle("Dabartinis miestas");
-            dlgAlert.setPositiveButton("OK", null);
-            dlgAlert.setCancelable(true);
-            dlgAlert.create().show();
-        }
 
 
         mVisible = true;
@@ -285,12 +287,30 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     @Override
     protected void onPause() {
         super.onPause();
-        locationManager.removeUpdates(this);
     }
 
+    public static boolean getNetworkState(Context pContext)
+    {
+        ConnectivityManager connect = null;
+        connect = (ConnectivityManager)pContext.getSystemService(pContext.CONNECTIVITY_SERVICE);
+
+        if(connect != null)
+        {
+            NetworkInfo result = connect.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (result != null && result.isConnectedOrConnecting())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+            return false;
+    }
     @Override
     protected void onResume() {
         super.onResume();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
 }
