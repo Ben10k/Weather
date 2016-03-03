@@ -1,6 +1,7 @@
 package com.birdisaword.birdsweather;
 
 import android.annotation.SuppressLint;
+import android.location.Address;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,13 +9,34 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.content.Intent;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.content.Context;
+import android.location.Geocoder;
+import android.app.AlertDialog;
+import android.widget.Toast;
+import android.widget.TextView;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends AppCompatActivity {
+public class FullscreenActivity extends AppCompatActivity implements LocationListener {
+
+    private TextView addressField; //Add a new TextView to your activity_main to display the address
+    private LocationManager locationManager;
+    private double latitude;
+    private double longitude;
+    private String provider = "aaaa";
+
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -42,6 +64,26 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_fullscreen);
+
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+
+        if (location != null) {
+            onLocationChanged(location);
+        } else {
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+            dlgAlert.setMessage("Priv");
+            dlgAlert.setTitle("App Title");
+            dlgAlert.setPositiveButton("OK", null);
+            dlgAlert.setCancelable(true);
+            dlgAlert.create().show();
+        }
+
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -168,9 +210,52 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
     public void sendMessage(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, FullscreenActivity2.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        Geocoder geo = new Geocoder(this, Locale.getDefault());
+        String city;
+        List<Address> addresses;
+        // addresses = geo.getFromLocation(latitude, longitude, 1);
+        try {
+            addresses = geo.getFromLocation(latitude, longitude, 1);
+            city = addresses.get(0).getLocality();
+        } catch (IOException e) {
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
 }
