@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -82,7 +83,7 @@ public class FullscreenActivity2 extends AppCompatActivity {
             return false;
         }
     };
-
+    private HandleXML obj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +106,32 @@ public class FullscreenActivity2 extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        EditText ed2,ed3,ed4;
+
+
+        ed2=(EditText)findViewById(R.id.editText2);
+        ed3=(EditText)findViewById(R.id.editText3);
+        ed4=(EditText)findViewById(R.id.editText4);
+
+
+
+                obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/q/CA/Kaunas.xml");
+                obj.fetchXML();
+
+                while(obj.parsingComplete);
+                ed2.setText(obj.getCountry());
+                ed3.setText(obj.getTemperature());
+                ed4.setText(obj.getHumidity());
+
+        ;
+
+
+
+        //private XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
+        //private XmlPullParser myparser = xmlFactoryObject.newPullParser();
+        //myparser.setInput("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/q/CA/Kaunas.xml", null);
+
     }
 
     @Override
