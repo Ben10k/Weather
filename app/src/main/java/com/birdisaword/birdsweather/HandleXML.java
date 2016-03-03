@@ -13,7 +13,6 @@ public class HandleXML {
     private String country = "city";
     private String temperature = "temp_c";
     private String humidity = "wind_kph";
-    private String pressure = "pressure_mb";
     private String urlString = null;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
@@ -34,13 +33,12 @@ public class HandleXML {
         return humidity;
     }
 
-    public String getPressure(){
-        return pressure;
-    }
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
         String text=null;
+
+        float greitis;
 
         try {
             event = myParser.getEventType();
@@ -57,20 +55,20 @@ public class HandleXML {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if(name.equals("CITY")){
-                            country = text;
+                        if(name.equals("city")){
+                            country = "Miestas: " +text;
                         }
 
                         else if(name.equals("wind_kph")){
-                            humidity = myParser.getAttributeValue(null,"value");
-                        }
-
-                        else if(name.equals("pressure_mb")){
-                            pressure = myParser.getAttributeValue(null,"value");
+                            greitis = Integer.parseInt(text);
+                            greitis /=3.6;
+                            humidity = "Vėjas: "+String.valueOf(Math.round(greitis))+" m/s";
+                            // humidity = myParser.getAttributeValue(null,"value");
                         }
 
                         else if(name.equals("temp_c")){
-                            temperature = myParser.getAttributeValue(null,"value");
+                            temperature = "Temperatūra: "+text+" °C";
+                                    //= myParser.getAttributeValue(null,"value");
                         }
 
                         else{

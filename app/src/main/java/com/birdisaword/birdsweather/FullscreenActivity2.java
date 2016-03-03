@@ -107,14 +107,12 @@ public class FullscreenActivity2 extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-        EditText ed1,ed2,ed3,ed4,ed5;
+        EditText ed2,ed3,ed4;
 
 
-        ed1=(EditText)findViewById(R.id.editText);
         ed2=(EditText)findViewById(R.id.editText2);
         ed3=(EditText)findViewById(R.id.editText3);
         ed4=(EditText)findViewById(R.id.editText4);
-        ed5=(EditText)findViewById(R.id.editText5);
 
 
 
@@ -125,7 +123,6 @@ public class FullscreenActivity2 extends AppCompatActivity {
                 ed2.setText(obj.getCountry());
                 ed3.setText(obj.getTemperature());
                 ed4.setText(obj.getHumidity());
-                ed5.setText(obj.getPressure());
 
         ;
 
