@@ -1,13 +1,20 @@
 package com.birdisaword.birdsweather;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.net.URL;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -24,7 +31,7 @@ public class FullscreenActivity2 extends AppCompatActivity {
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+    private static final int AUTO_HIDE_DELAY_MILLIS = 1;
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -90,7 +97,7 @@ public class FullscreenActivity2 extends AppCompatActivity {
 
         setContentView(R.layout.activity_fullscreen2);
 
-        mVisible = true;
+        mVisible = false;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
@@ -99,32 +106,37 @@ public class FullscreenActivity2 extends AppCompatActivity {
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggle();
+                //toggle();
             }
         });
-
+        hide();
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-        EditText ed2,ed3,ed4;
+
+        TextView TV1,TV2,TV3,TV4;
+        ImageView IM1;
+        TV1=(TextView)findViewById(R.id.textView);
+        TV2=(TextView)findViewById(R.id.textView2);
+        TV3=(TextView)findViewById(R.id.textView3);
+        TV4=(TextView)findViewById(R.id.textView4);
+        IM1=(ImageView)findViewById(R.id.imageView);
+URL url;
 
 
-        ed2=(EditText)findViewById(R.id.editText2);
-        ed3=(EditText)findViewById(R.id.editText3);
-        ed4=(EditText)findViewById(R.id.editText4);
-
-
-
-                obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/q/CA/Kaunas.xml");
+        obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/q/CA/Kaunas.xml");
                 obj.fetchXML();
 
                 while(obj.parsingComplete);
-                ed2.setText(obj.getCountry());
-                ed3.setText(obj.getTemperature());
-                ed4.setText(obj.getHumidity());
-
-        ;
+                TV1.setText(obj.getCountry());
+                TV2.setText(obj.getTemperature());
+                TV3.setText(obj.getHumidity());
+                Picasso
+                            .with(this)
+                            .load(obj.getIconUrl())
+                            .resize(200,200)
+                            .into(IM1);
 
 
 
@@ -141,14 +153,14 @@ public class FullscreenActivity2 extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(0);
+        //delayedHide(0);
     }
 
     private void toggle() {
         if (mVisible) {
-            //hide();
+            hide();
         } else {
-            //show();
+            show();
         }
     }
 

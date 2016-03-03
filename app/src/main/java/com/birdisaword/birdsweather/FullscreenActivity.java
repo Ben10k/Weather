@@ -130,7 +130,7 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     };
 
 
-    private void toggle() {
+    private void x() {
         if (mVisible) {
             hide();
         } else {

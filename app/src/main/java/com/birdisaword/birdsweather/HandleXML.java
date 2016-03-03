@@ -13,6 +13,8 @@ public class HandleXML {
     private String country = "city";
     private String temperature = "temp_c";
     private String humidity = "wind_kph";
+    private String iconName =  "icon";
+    private String iconUrl =  "icon";
     private String urlString = null;
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
@@ -33,6 +35,13 @@ public class HandleXML {
         return humidity;
     }
 
+    public String getIconName(){
+        return iconName;
+    }
+
+    public String getIconUrl(){
+        return iconUrl;
+    }
 
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
@@ -68,8 +77,21 @@ public class HandleXML {
 
                         else if(name.equals("temp_c")){
                             temperature = "Temperatūra: "+text+" °C";
-                                    //= myParser.getAttributeValue(null,"value");
+                            //= myParser.getAttributeValue(null,"value");
                         }
+
+                        else if(name.equals("icon")){
+                            iconName = text;
+
+                        }
+
+                        else if(name.equals("icon_url")){
+                            iconUrl = text;
+
+                        }
+
+
+
 
                         else{
                         }
