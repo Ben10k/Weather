@@ -89,6 +89,8 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
             if (myLocation != null)
                 onLocationChanged(myLocation);
+
+
             }
 
 
@@ -244,6 +246,7 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     public void sendMessage(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, FullscreenActivity2.class);
+        intent.putExtra("Miestas",city);
         startActivity(intent);
     }
 
@@ -257,12 +260,6 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
         try {
             addresses = geo.getFromLocation(latitude, longitude, 1);
             city = addresses.get(0).getLocality();
-            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-            dlgAlert.setMessage(city);
-            dlgAlert.setTitle("Dabartinis miestas");
-            dlgAlert.setPositiveButton("OK", null);
-            dlgAlert.setCancelable(true);
-            dlgAlert.create().show();
         } catch (IOException e) {
         }
 

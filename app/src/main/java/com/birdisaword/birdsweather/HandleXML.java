@@ -16,6 +16,7 @@ public class HandleXML {
     private String iconName =  "icon";
     private String iconUrl =  "icon";
     private String urlString = null;
+    private String weather = "weather";
     private XmlPullParserFactory xmlFactoryObject;
     public volatile boolean parsingComplete = true;
 
@@ -26,7 +27,9 @@ public class HandleXML {
     public String getCountry(){
         return country;
     }
-
+    public String getWeather(){
+        return weather;
+    }
     public String getTemperature(){
         return temperature;
     }
@@ -39,6 +42,7 @@ public class HandleXML {
         return iconName;
     }
 
+
     public String getIconUrl(){
         return iconUrl;
     }
@@ -46,6 +50,7 @@ public class HandleXML {
     public void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
         String text=null;
+        boolean miestas = true;
 
         float greitis;
 
@@ -65,11 +70,15 @@ public class HandleXML {
 
                     case XmlPullParser.END_TAG:
                         if(name.equals("city")){
-                            country = "Miestas: " +text;
+                            if(miestas)
+                            {
+                                country = "Miestas: " + text;
+                                miestas = false;
+                            }
                         }
 
                         else if(name.equals("wind_kph")){
-                            greitis = Integer.parseInt(text);
+                            greitis = Float.parseFloat(text);
                             greitis /=3.6;
                             humidity = "Vėjas: "+String.valueOf(Math.round(greitis))+" m/s";
                             // humidity = myParser.getAttributeValue(null,"value");
@@ -77,6 +86,10 @@ public class HandleXML {
 
                         else if(name.equals("temp_c")){
                             temperature = "Temperatūra: "+text+" °C";
+                            //= myParser.getAttributeValue(null,"value");
+                        }
+                        else if(name.equals("weather")){
+                            weather = "Dabar: "+text;
                             //= myParser.getAttributeValue(null,"value");
                         }
 

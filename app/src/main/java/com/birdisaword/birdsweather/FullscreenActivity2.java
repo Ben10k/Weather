@@ -1,8 +1,6 @@
 package com.birdisaword.birdsweather;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -76,6 +73,7 @@ public class FullscreenActivity2 extends AppCompatActivity {
             hide();
         }
     };
+
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
@@ -101,6 +99,12 @@ public class FullscreenActivity2 extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
+        String city = "Vilnius";
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            city = extras.getString("Miestas");
+        }
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -122,21 +126,22 @@ public class FullscreenActivity2 extends AppCompatActivity {
         TV3=(TextView)findViewById(R.id.textView3);
         TV4=(TextView)findViewById(R.id.textView4);
         IM1=(ImageView)findViewById(R.id.imageView);
-URL url;
 
 
-        obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/q/CA/Kaunas.xml");
+        obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/lang:LT/q/CA/"+city+".xml");
                 obj.fetchXML();
 
                 while(obj.parsingComplete);
                 TV1.setText(obj.getCountry());
                 TV2.setText(obj.getTemperature());
                 TV3.setText(obj.getHumidity());
+                TV4.setText(obj.getWeather());
                 Picasso
                             .with(this)
                             .load(obj.getIconUrl())
-                            .resize(200,200)
-                            .into(IM1);
+                            .resize(500,500)
+                            .centerInside()
+                        .into(IM1);
 
 
 
