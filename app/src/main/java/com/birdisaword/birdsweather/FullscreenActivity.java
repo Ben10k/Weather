@@ -89,8 +89,6 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
             if (myLocation != null)
                 onLocationChanged(myLocation);
-
-
             }
 
 

@@ -1,9 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.broadcastreceiverdemo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#272727"
     android:padding="@dimen/widget_margin">
-
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
@@ -18,18 +18,16 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_weight="0.7">
+        <TextView
+            android:id="@+id/TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:background="#272727"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
     </RelativeLayout>
-
-    <!-- <TextView
-        android:id="@+id/appwidget_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="8dp"
-        android:background="#272727"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" /> -->
-
 </LinearLayout>

@@ -1,12 +1,14 @@
 package com.birdisaword.birdsweather;
 
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -143,6 +145,15 @@ public class FullscreenActivity2 extends AppCompatActivity {
                             .centerInside()
                         .into(IM1);
 
+        Intent updateWidget = new Intent(this, WeatherWidget.class); // Widget.class is your widget class
+        updateWidget.setAction("update_widget");
+        updateWidget.putExtra("T", obj.getTemperature());
+        PendingIntent pending = PendingIntent.getBroadcast(getBaseContext(), 0, updateWidget, PendingIntent.FLAG_CANCEL_CURRENT);
+        try {
+            pending.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
 
 
         //private XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
