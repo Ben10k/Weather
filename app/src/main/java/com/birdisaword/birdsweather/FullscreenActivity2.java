@@ -103,10 +103,10 @@ public class FullscreenActivity2 extends AppCompatActivity {
 
         String city = "Vilnius";
 
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         if (extras != null) {
             city = extras.getString("Miestas");
-        }
+        }*/
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +144,6 @@ public class FullscreenActivity2 extends AppCompatActivity {
                             .resize(500,500)
                             .centerInside()
                         .into(IM1);
-
         Intent updateWidget = new Intent(this, WeatherWidget.class); // Widget.class is your widget class
         updateWidget.setAction("update_widget");
         updateWidget.putExtra("T", obj.getTemperature());

@@ -48,6 +48,11 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/weather_widget_info" />
         </receiver>
+
+        <service
+            android:name=".WidgetService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

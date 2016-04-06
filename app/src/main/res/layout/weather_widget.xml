@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#272727"
+    android:launchMode="singleInstance"
     android:padding="@dimen/widget_margin">
     <RelativeLayout
         android:layout_width="0dip"
@@ -10,6 +11,7 @@
         android:layout_weight="0.3">
         <Button
             android:id="@+id/wbutton"
+            android:enabled="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@mipmap/ic_launcher"/>
