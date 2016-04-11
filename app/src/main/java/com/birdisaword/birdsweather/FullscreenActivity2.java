@@ -20,6 +20,8 @@ import com.squareup.picasso.Picasso;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity2 extends AppCompatActivity {
+
+    private boolean running = false;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -90,10 +92,13 @@ public class FullscreenActivity2 extends AppCompatActivity {
             return false;
         }
     };
+
     private HandleXML obj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        running = true;
 
         setContentView(R.layout.activity_fullscreen2);
 
@@ -103,10 +108,10 @@ public class FullscreenActivity2 extends AppCompatActivity {
 
         String city = "Vilnius";
 
-        /*Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         if (extras != null) {
             city = extras.getString("Miestas");
-        }*/
+        }
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -144,16 +149,6 @@ public class FullscreenActivity2 extends AppCompatActivity {
                             .resize(500,500)
                             .centerInside()
                         .into(IM1);
-        Intent updateWidget = new Intent(this, WeatherWidget.class); // Widget.class is your widget class
-        updateWidget.setAction("update_widget");
-        updateWidget.putExtra("T", obj.getTemperature());
-        PendingIntent pending = PendingIntent.getBroadcast(getBaseContext(), 0, updateWidget, PendingIntent.FLAG_CANCEL_CURRENT);
-        try {
-            pending.send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-        }
-
 
         //private XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
         //private XmlPullParser myparser = xmlFactoryObject.newPullParser();
@@ -177,6 +172,11 @@ public class FullscreenActivity2 extends AppCompatActivity {
         } else {
             show();
         }
+    }
+
+    public boolean getRunning()
+    {
+        return this.running;
     }
 
     private void hide() {

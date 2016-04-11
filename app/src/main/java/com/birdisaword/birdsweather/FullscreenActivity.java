@@ -30,15 +30,15 @@ import java.util.Locale;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends AppCompatActivity implements LocationListener {
+public class FullscreenActivity extends AppCompatActivity implements LocationListener{
 
-    private TextView addressField; //Add a new TextView to your activity_main to display the address
+    String city;
     private LocationManager locationManager;
     private double latitude;
     private double longitude;
-    private String provider = "aaaa";
-    private String city;
+    private String provider;
 
+    private TextView addressField; //Add a new TextView to your activity_main to display the address
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -78,7 +78,9 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
             dlgAlert.create().show();
 
 
-            } else {
+            }
+        else
+        {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
             Criteria criteria = new Criteria();
@@ -89,8 +91,7 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
             if (myLocation != null)
                 onLocationChanged(myLocation);
-            }
-
+        }
 
 
         mVisible = true;
@@ -147,26 +148,6 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     }
 
     //----------------------------------------------------------------------------------------------
-
-    private Location getLastKnownLocation() {
-        LocationManager mLocationManager;
-        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
-        List<String> providers = mLocationManager.getProviders(true);
-        Location bestLocation = null;
-        for (String provider : providers) {
-            Location l = mLocationManager.getLastKnownLocation(provider);
-            if (l == null) {
-                continue;
-            }
-            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                // Found best last known location: %s", l);
-                bestLocation = l;
-            }
-        }
-        return bestLocation;
-    }
-
-
 
     private void hide() {
         // Hide UI first
@@ -244,39 +225,8 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     public void sendMessage(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, FullscreenActivity2.class);
-        intent.putExtra("Miestas",city);
+        intent.putExtra("Miestas", city);
         startActivity(intent);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        Geocoder geo = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses;
-        // addresses = geo.getFromLocation(latitude, longitude, 1);
-        try {
-            addresses = geo.getFromLocation(latitude, longitude, 1);
-            city = addresses.get(0).getLocality();
-        } catch (IOException e) {
-        }
-
-    }
-
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
     }
 
     @Override
@@ -307,5 +257,52 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private Location getLastKnownLocation() {
+        LocationManager mLocationManager;
+        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        Geocoder geo = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses;
+        // addresses = geo.getFromLocation(latitude, longitude, 1);
+        try {
+            addresses = geo.getFromLocation(latitude, longitude, 1);
+            city = addresses.get(0).getLocality();
+        } catch (IOException e) {
+        }
+
     }
 }

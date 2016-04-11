@@ -19,9 +19,25 @@
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="0.7">
+        android:layout_weight="0.35">
         <TextView
             android:id="@+id/TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:background="#272727"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.35">
+        <TextView
+            android:id="@+id/TV2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

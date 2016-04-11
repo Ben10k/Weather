@@ -31,14 +31,15 @@ public class WeatherWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
-        Intent configIntent = new Intent(context, FullscreenActivity2.class);
-        PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
+        Intent configIntent = new Intent(context, WidgetService.class);
+        PendingIntent configPendingIntent = PendingIntent.getService(context, 0, configIntent, 0);
         remoteViews.setOnClickPendingIntent(R.id.wbutton, configPendingIntent);
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }
 
     @Override
     public void onEnabled(Context context) {
+
     }
 
     @Override
@@ -61,7 +62,12 @@ public class WeatherWidget extends AppWidgetProvider {
                             R.layout.weather_widget);
 
                     // Update text, images, whatever - here
-                    remoteViews.setTextViewText(R.id.TV, intent.getStringExtra("T"));
+                    String temp = intent.getStringExtra("T");
+                    String wind = intent.getStringExtra("V");
+                    temp = temp.substring(12);
+                    wind = wind.substring(7);
+                    remoteViews.setTextViewText(R.id.TV, temp);
+                    remoteViews.setTextViewText(R.id.TV2, wind);
 
                     // Trigger widget layout update
                     AppWidgetManager.getInstance(context).updateAppWidget(
