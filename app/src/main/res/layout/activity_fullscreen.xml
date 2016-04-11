@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="#26A69A"
     tools:context="com.birdisaword.birdsweather.FullscreenActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -15,8 +15,7 @@
         android:textColor="#33b5e5"
         android:textStyle="bold"
         android:textSize="50sp"
-        android:gravity="center"
-        android:text="@string/dummy_content" />
+        android:gravity="center" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
@@ -36,12 +35,31 @@
         </LinearLayout>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Oras Kaune"
+            android:text="Oras"
             android:id="@+id/button"
             android:onClick="sendMessage"
+            android:background="@drawable/mybutton"
             android:layout_gravity="center_horizontal|top" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="About"
+            android:id="@+id/button1"
+            android:onClick="About"
+            android:background="@drawable/mybutton"
+            android:layout_gravity="center_horizontal|center" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Exit"
+            android:id="@+id/button2"
+            android:onClick="Exit"
+            android:background="@drawable/mybutton"
+            android:layout_gravity="center_horizontal|bottom" />
 
     </FrameLayout>
 

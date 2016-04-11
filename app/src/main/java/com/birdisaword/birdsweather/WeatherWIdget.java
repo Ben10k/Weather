@@ -1,5 +1,6 @@
 package com.birdisaword.birdsweather;
 
+import android.app.AlarmManager;
 import android.appwidget.AppWidgetProvider;
 
 
@@ -29,10 +30,10 @@ public class WeatherWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
+
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
         Intent configIntent = new Intent(context, WidgetService.class);
-        PendingIntent configPendingIntent = PendingIntent.getService(context, 0, configIntent, 0);
+        PendingIntent configPendingIntent = PendingIntent.getService(context, 0, configIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.wbutton, configPendingIntent);
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }

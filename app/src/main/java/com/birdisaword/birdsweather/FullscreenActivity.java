@@ -222,11 +222,28 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
+    public void Exit(View view) {
+        // Do something in response to button
+        finish();
+        System.exit(0);
+    }
+
     public void sendMessage(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, FullscreenActivity2.class);
         intent.putExtra("Miestas", city);
         startActivity(intent);
+    }
+
+    public void About(View view) {
+        // Do something in response to button
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("This app is created by Rokas Rainys and Benas Taurosevičius");
+        dlgAlert.setTitle("About");
+        dlgAlert.setPositiveButton("Got it!", null);
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+        delayedHide(100);
     }
 
     @Override

@@ -19,7 +19,7 @@
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="0.35">
+        android:layout_weight="0.4">
         <TextView
             android:id="@+id/TV"
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="0.35">
+        android:layout_weight="0.3">
         <TextView
             android:id="@+id/TV2"
             android:layout_width="wrap_content"
