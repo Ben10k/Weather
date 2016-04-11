@@ -46,14 +46,14 @@
             android:layout_weight="1"
             android:text="Forecast"
             android:id="@+id/button3"
-            android:onClick="Forecast"
+            android:onClick="sendForecast"
             android:background="@drawable/mybutton"
             android:layout_gravity="center_vertical|right" />
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Stations"
+            android:text="Cities"
             android:id="@+id/button4"
             android:onClick="openList"
             android:background="@drawable/mybutton"

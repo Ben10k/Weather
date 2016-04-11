@@ -237,6 +237,13 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
         startActivity(intent);
     }
 
+
+    public void sendForecast(View view) {
+        Intent intent = new Intent(this, FullscreenActivity4.class);
+        intent.putExtra("Miestas", city);
+        startActivity(intent);
+    }
+
     public void openList(View view){
         Intent intent = new Intent(this, FullscreenActivity3.class);
         startActivity(intent);

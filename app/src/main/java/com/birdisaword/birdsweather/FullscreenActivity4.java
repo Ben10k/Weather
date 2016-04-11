@@ -1,34 +1,22 @@
 package com.birdisaword.birdsweather;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.PendingIntent;
-import android.content.DialogInterface;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.content.Intent;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity2 extends AppCompatActivity {
-
-    private boolean running = false;
+public class FullscreenActivity4 extends AppCompatActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -84,7 +72,6 @@ public class FullscreenActivity2 extends AppCompatActivity {
             hide();
         }
     };
-
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
@@ -99,24 +86,20 @@ public class FullscreenActivity2 extends AppCompatActivity {
             return false;
         }
     };
-
     private HandleXML obj;
-    private HandleXML2 obj2;
-    private String city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        running = true;
+        setContentView(R.layout.activity_fullscreen4);
 
-        setContentView(R.layout.activity_fullscreen2);
-
-        mVisible = false;
+        mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-        city = "Vilnius";
+
+        String city = "Vilnius";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -137,19 +120,21 @@ public class FullscreenActivity2 extends AppCompatActivity {
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        TextView TV1, TV2, TV3, TV4;
+        /*
+        TextView TV1,TV2,TV3,TV4;
         ImageView IM1;
-        TV1 = (TextView) findViewById(R.id.textView);
-        TV2 = (TextView) findViewById(R.id.textView2);
-        TV3 = (TextView) findViewById(R.id.textView3);
-        TV4 = (TextView) findViewById(R.id.textView4);
-        IM1 = (ImageView) findViewById(R.id.imageView);
+        TV1=(TextView)findViewById(R.id.textView);
+        TV2=(TextView)findViewById(R.id.textView2);
+        TV3=(TextView)findViewById(R.id.textView3);
+        TV4=(TextView)findViewById(R.id.textView4);
+        IM1=(ImageView)findViewById(R.id.imageView);
+*/
 
-
-        obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/lang:LT/q/CA/" + city + ".xml");
+        obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/forecast/lang:LT/q/CA/"+city+".xml");
         obj.fetchXML();
 
-        while (obj.parsingComplete) ;
+        /*
+        while(obj.parsingComplete);
         TV1.setText(obj.getCountry());
         TV2.setText(obj.getTemperature());
         TV3.setText(obj.getHumidity());
@@ -157,11 +142,19 @@ public class FullscreenActivity2 extends AppCompatActivity {
         Picasso
                 .with(this)
                 .load(obj.getIconUrl())
-                .resize(500, 500)
+                .resize(500,500)
                 .centerInside()
                 .into(IM1);
 
+*/
 
+
+        // Set up the user interaction to manually show or hide the system UI.
+
+
+        // Upon interacting with UI controls, delay any scheduled hide()
+        // operations to prevent the jarring behavior of controls going away
+        // while interacting with the UI.
     }
 
     @Override
@@ -171,19 +164,15 @@ public class FullscreenActivity2 extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        //delayedHide(0);
+        delayedHide(100);
     }
 
-    /* private void toggle() {
-         if (mVisible) {
-             hide();
-         } else {
-             show();
-         }
-     }
- */
-    public boolean getRunning() {
-        return this.running;
+    private void toggle() {
+        if (mVisible) {
+            hide();
+        } else {
+            show();
+        }
     }
 
     private void hide() {
@@ -220,38 +209,4 @@ public class FullscreenActivity2 extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-
-    public void openList(View view) {
-
-
-
-        obj2 = new HandleXML2("http://api.wunderground.com/api/f7f4c08a99ea3a7b/geolookup/q/CA/" + city + ".xml");
-        obj2.fetchXML();
-
-        while (obj2.parsingComplete) ;
-        String items[] = obj2.getNeighborhood();
-        String IDs[] = obj2.getID();
-        //TV1.setText(obj.getCountry());
-
-
-
-
-
-
-
-       // String[] items = {"A","B","C","D"};
-        AlertDialog.Builder build = new AlertDialog.Builder(this);
-        build.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        }).create().show();
-
-
-        //Intent intent = new Intent(this, FullscreenActivity3.class);
-        //startActivity(intent);
-    }
-
-
 }

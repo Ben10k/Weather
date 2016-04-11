@@ -1,0 +1,124 @@
+package com.birdisaword.birdsweather;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Sairamkrishna on 4/11/2015.
+ */
+public class HandleXML2 {
+
+
+    //List<String> ID = new ArrayList<String>();
+
+    private String ID[];
+
+    public String[] getID(){
+        return ID;
+    }
+    private String Neighborhood[];
+
+    public String[] getNeighborhood(){
+        return Neighborhood;
+    }
+
+    private String urlString = null;
+    private XmlPullParserFactory xmlFactoryObject;
+    public volatile boolean parsingComplete = true;
+
+    public HandleXML2(String url){
+        this.urlString = url;
+    }
+
+
+
+
+    public void parseXMLAndStoreIt(XmlPullParser myParser) {
+        int event;
+        String text=null;
+        List<String> IDs = new ArrayList<String>();
+        List<String> Neighborhoods = new ArrayList<String>();
+
+
+        float greitis;
+
+        try {
+            event = myParser.getEventType();
+
+            while (event != XmlPullParser.END_DOCUMENT) {
+                String name=myParser.getName();
+
+                switch (event){
+                    case XmlPullParser.START_TAG:
+                        break;
+
+                    case XmlPullParser.TEXT:
+                        text = myParser.getText();
+                        break;
+
+                    case XmlPullParser.END_TAG:
+                        if(name.equals("neighborhood")){
+                            Neighborhoods.add( text);
+
+                        }
+
+                        else if(name.equals("id")){
+                            IDs.add(text);
+                        }
+                        else{
+                        }
+                        break;
+                }
+                event = myParser.next();
+            }
+            parsingComplete = false;
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ID = new String[IDs.size()];
+        ID = IDs.toArray(ID);
+        Neighborhood = new String[Neighborhoods.size()];
+        Neighborhood = Neighborhoods.toArray(Neighborhood);
+    }
+
+    public void fetchXML(){
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(urlString);
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+
+                    conn.setReadTimeout(10000 /* milliseconds */);
+                    conn.setConnectTimeout(15000 /* milliseconds */);
+                    conn.setRequestMethod("GET");
+                    conn.setDoInput(true);
+                    conn.connect();
+
+                    InputStream stream = conn.getInputStream();
+                    xmlFactoryObject = XmlPullParserFactory.newInstance();
+                    XmlPullParser myparser = xmlFactoryObject.newPullParser();
+
+                    myparser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+                    myparser.setInput(stream, null);
+
+                    parseXMLAndStoreIt(myparser);
+                    stream.close();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+}

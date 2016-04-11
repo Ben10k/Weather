@@ -96,6 +96,18 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp" />
 
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Stations"
+                android:id="@+id/button5"
+                android:onClick="openList"
+                android:background="@drawable/mybutton"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_below="@+id/textView"
+                android:layout_centerHorizontal="true" />
+
         </RelativeLayout>
 
     </FrameLayout>
