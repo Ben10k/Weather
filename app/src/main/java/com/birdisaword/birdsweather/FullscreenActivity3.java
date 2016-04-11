@@ -1,27 +1,22 @@
 package com.birdisaword.birdsweather;
 
 import android.annotation.SuppressLint;
-import android.app.PendingIntent;
-import android.os.Bundle;
-import android.os.Handler;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.content.Intent;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity2 extends AppCompatActivity {
-
-    private boolean running = false;
+public class FullscreenActivity3 extends AppCompatActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -32,13 +27,27 @@ public class FullscreenActivity2 extends AppCompatActivity {
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 1;
+    private static final int AUTO_HIDE_DELAY_MILLIS = 10;
 
     /**
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
-    private static final int UI_ANIMATION_DELAY = 300;
+    String[] miestai = {"Ariogala", "Biržai",   "Alytus",
+            "Druskininkai", "Panevėžys", "Vilnius", "Daugai", "Dūkštas",
+            "Garliava",
+            "Ignalina", "Jieznas", "Jonava", "Jurbarkas",
+            "Kalvarija", "Kaunas", "Kelmė", "Klaipėda", "Kretinga",
+            "Kybartai", "Lazdijai", "Lentvaris", "Linkuva",
+            "Veisiejai", "Marijampolė",
+            "Neringa", "Obeliai", "Pakruojis", "Palanga",
+            "Pasvalys", "Prienai", "Ramygala",
+            "Raseiniai", "Rietavas", "Salantai",
+            "Šiauliai", "Šilutė", "Simnas", "Skuodas",
+            "Telšiai", "Trakai",
+            "Ukmergė", "Utena", "Vabalninkas", "Varėna", "Varniai", "Venta",
+            "Vievis", "Vilkija", "Virbalis", "Visaginas", "Zarasai"};
+    private static final int UI_ANIMATION_DELAY = 10;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -77,7 +86,6 @@ public class FullscreenActivity2 extends AppCompatActivity {
             hide();
         }
     };
-
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
@@ -93,25 +101,38 @@ public class FullscreenActivity2 extends AppCompatActivity {
         }
     };
 
-    private HandleXML obj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        running = true;
+        setContentView(R.layout.activity_fullscreen3);
 
-        setContentView(R.layout.activity_fullscreen2);
-
-        mVisible = false;
+        mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-        String city = "Vilnius";
+        hide();
+        ListView listView = (ListView) findViewById(R.id.listView);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            city = extras.getString("Miestas");
-        }
+        listView.setAdapter(new ArrayAdapter<String>(this, R.layout.activity_fullscreen3, R.id.textView5, miestai));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                    //code specific to first list item
+                    Intent intent = new Intent(view.getContext(), FullscreenActivity2.class);
+                    intent.putExtra("Miestas", miestai[position]);
+                    startActivity(intent);
+
+
+
+            }
+        });
+
+
+
+
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -121,40 +142,12 @@ public class FullscreenActivity2 extends AppCompatActivity {
             }
         });
 
-        hide();
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-
-        TextView TV1,TV2,TV3,TV4;
-        ImageView IM1;
-        TV1=(TextView)findViewById(R.id.textView);
-        TV2=(TextView)findViewById(R.id.textView2);
-        TV3=(TextView)findViewById(R.id.textView3);
-        TV4=(TextView)findViewById(R.id.textView4);
-        IM1=(ImageView)findViewById(R.id.imageView);
-
-
-        obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/conditions/lang:LT/q/CA/"+city+".xml");
-                obj.fetchXML();
-
-                while(obj.parsingComplete);
-                TV1.setText(obj.getCountry());
-                TV2.setText(obj.getTemperature());
-                TV3.setText(obj.getHumidity());
-                TV4.setText(obj.getWeather());
-                Picasso
-                            .with(this)
-                            .load(obj.getIconUrl())
-                            .resize(500,500)
-                            .centerInside()
-                        .into(IM1);
-
-
-
-
     }
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -163,20 +156,15 @@ public class FullscreenActivity2 extends AppCompatActivity {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        //delayedHide(0);
+        //delayedHide(1);
     }
 
-   /* private void toggle() {
+    private void toggle() {
         if (mVisible) {
             hide();
         } else {
             show();
         }
-    }
-*/
-    public boolean getRunning()
-    {
-        return this.running;
     }
 
     private void hide() {

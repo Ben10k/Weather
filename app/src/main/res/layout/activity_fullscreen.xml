@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:text="Stations"
             android:id="@+id/button4"
-            android:onClick="Stations"
+            android:onClick="openList"
             android:background="@drawable/mybutton"
             android:layout_gravity="center_vertical|left" />
         <Button

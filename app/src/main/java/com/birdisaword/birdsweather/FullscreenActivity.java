@@ -18,6 +18,7 @@ import android.location.Location;
 import android.content.Context;
 import android.location.Geocoder;
 import android.app.AlertDialog;
+import android.widget.Button;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -88,7 +89,8 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
 
 
             Location myLocation = getLastKnownLocation();
-
+            Button b1 = (Button)findViewById(R.id.button);
+            b1.setEnabled(true);
             if (myLocation != null)
                 onLocationChanged(myLocation);
         }
@@ -232,6 +234,11 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
         // Do something in response to button
         Intent intent = new Intent(this, FullscreenActivity2.class);
         intent.putExtra("Miestas", city);
+        startActivity(intent);
+    }
+
+    public void openList(View view){
+        Intent intent = new Intent(this, FullscreenActivity3.class);
         startActivity(intent);
     }
 
