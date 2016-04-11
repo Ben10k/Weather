@@ -274,6 +274,7 @@ public class FullscreenActivity extends AppCompatActivity implements LocationLis
     @Override
     protected void onResume() {
         super.onResume();
+        delayedHide(100);
     }
 
     private Location getLastKnownLocation() {

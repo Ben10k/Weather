@@ -31,13 +31,11 @@
             android:background="@color/black_overlay"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
-
         </LinearLayout>
-
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Oras"
+            android:text="Weather"
             android:id="@+id/button"
             android:onClick="sendMessage"
             android:background="@drawable/mybutton"
@@ -46,11 +44,29 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="Forecast"
+            android:id="@+id/button3"
+            android:onClick="Forecast"
+            android:background="@drawable/mybutton"
+            android:layout_gravity="center_vertical|right" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Stations"
+            android:id="@+id/button4"
+            android:onClick="Stations"
+            android:background="@drawable/mybutton"
+            android:layout_gravity="center_vertical|left" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="About"
             android:id="@+id/button1"
             android:onClick="About"
             android:background="@drawable/mybutton"
-            android:layout_gravity="center_horizontal|center" />
+            android:layout_gravity="bottom|left" />
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -59,7 +75,7 @@
             android:id="@+id/button2"
             android:onClick="Exit"
             android:background="@drawable/mybutton"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:layout_gravity="bottom|right" />
 
     </FrameLayout>
 
