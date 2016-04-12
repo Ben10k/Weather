@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -123,6 +124,11 @@ public class FullscreenActivity2 extends AppCompatActivity {
             city = extras.getString("Miestas");
         }
 
+        String kl = city.substring(0,3);
+
+
+
+
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +143,10 @@ public class FullscreenActivity2 extends AppCompatActivity {
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
+        Button B5;
+        B5 = (Button) findViewById(R.id.button5);
+        if (kl.compareTo("pws")==0)
+            B5.setEnabled(false);
         TextView TV1, TV2, TV3, TV4;
         ImageView IM1;
         TV1 = (TextView) findViewById(R.id.textView);
@@ -228,29 +238,29 @@ public class FullscreenActivity2 extends AppCompatActivity {
         obj2 = new HandleXML2("http://api.wunderground.com/api/f7f4c08a99ea3a7b/geolookup/q/CA/" + city + ".xml");
         obj2.fetchXML();
 
-        while (obj2.parsingComplete) ;
+        while (obj2.parsingComplete);
+        //String[] items = {"A","B","C","D"};
         String items[] = obj2.getNeighborhood();
-        String IDs[] = obj2.getID();
-        //TV1.setText(obj.getCountry());
+        final String IDs[] = obj2.getID();
 
 
+        final Intent intent = new Intent(this, FullscreenActivity2.class);
 
-
-
-
-
-       // String[] items = {"A","B","C","D"};
         AlertDialog.Builder build = new AlertDialog.Builder(this);
         build.setItems(items, new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                intent.putExtra("Miestas", "pws:"+IDs[which]);
+                startActivity(intent);
 
             }
-        }).create().show();
+        });
 
 
-        //Intent intent = new Intent(this, FullscreenActivity3.class);
-        //startActivity(intent);
+        build.create();
+        build.show();
+
     }
 
 

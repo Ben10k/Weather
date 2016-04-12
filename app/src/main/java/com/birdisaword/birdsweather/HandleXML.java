@@ -72,8 +72,13 @@ public class HandleXML {
                         if(name.equals("city")){
                             if(miestas)
                             {
-                                country = "Miestas: " + text;
-                                miestas = false;
+
+                                if(!urlString.contains("pws")) {
+                                    miestas = false;
+                                    country = "Miestas: " + text;
+                                }
+                                else
+                                    country = "Stotelė: " + text;;
                             }
                         }
 

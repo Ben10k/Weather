@@ -77,17 +77,16 @@ public class HandleXML2 {
                 }
                 event = myParser.next();
             }
+            ID = new String[IDs.size()];
+            ID = IDs.toArray(ID);
+            Neighborhood = new String[Neighborhoods.size()];
+            Neighborhood = Neighborhoods.toArray(Neighborhood);
             parsingComplete = false;
         }
 
         catch (Exception e) {
             e.printStackTrace();
         }
-
-        ID = new String[IDs.size()];
-        ID = IDs.toArray(ID);
-        Neighborhood = new String[Neighborhoods.size()];
-        Neighborhood = Neighborhoods.toArray(Neighborhood);
     }
 
     public void fetchXML(){
