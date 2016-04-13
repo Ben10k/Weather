@@ -59,7 +59,7 @@ public class WidgetService extends Service implements LocationListener {
         } catch (PendingIntent.CanceledException e) {
             e.printStackTrace();
         }
-
+        stopSelf();
     }
 
 

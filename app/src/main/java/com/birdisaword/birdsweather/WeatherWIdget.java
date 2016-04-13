@@ -21,8 +21,6 @@ public class WeatherWidget extends AppWidgetProvider {
                                 int appWidgetId) {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
-
-        // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
@@ -30,12 +28,14 @@ public class WeatherWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
+        for (int i = 0; i < appWidgetIds.length; i++) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
         Intent configIntent = new Intent(context, WidgetService.class);
-        PendingIntent configPendingIntent = PendingIntent.getService(context, 0, configIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent configPendingIntent = PendingIntent.getService(context, 0, configIntent, 0);
         remoteViews.setOnClickPendingIntent(R.id.wbutton, configPendingIntent);
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+        }
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
@@ -44,18 +44,19 @@ public class WeatherWidget extends AppWidgetProvider {
     }
 
     @Override
+    public void onDeleted(Context context, int[] appWidgetIds)
+    {
+        super.onDeleted(context, appWidgetIds);
+    }
+
+    @Override
     public void onDisabled(Context context) {
+        super.onDisabled(context);
         // Enter relevant functionality for when the last widget is disabled
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-
-
-        super.onReceive(context, intent);
-
-
                 if (intent.getAction().equals("update_widget")) {
                     // Manual or automatic widget update started
 
@@ -73,7 +74,10 @@ public class WeatherWidget extends AppWidgetProvider {
                     // Trigger widget layout update
                     AppWidgetManager.getInstance(context).updateAppWidget(
                             new ComponentName(context, WeatherWidget.class), remoteViews);
+
+
                 }
+        super.onReceive(context, intent);
     }
 }
 

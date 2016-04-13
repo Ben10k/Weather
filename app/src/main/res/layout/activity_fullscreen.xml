@@ -1,13 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#26A69A"
     tools:context="com.birdisaword.birdsweather.FullscreenActivity">
-
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <TextView android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,67 +12,102 @@
         android:textStyle="bold"
         android:textSize="50sp"
         android:gravity="center" />
-
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout android:layout_width="match_parent"
+    <RelativeLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
+        android:fitsSystemWindows="true"
+        android:weightSum="2">
         <LinearLayout android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:orientation="vertical"
+            tools:ignore="UselessParent"
+            android:layout_weight="1">
         </LinearLayout>
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Weather"
-            android:id="@+id/button"
-            android:onClick="sendMessage"
-            android:background="@drawable/mybutton"
-            android:layout_gravity="center_horizontal|top" />
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="Forecast"
-            android:id="@+id/button3"
-            android:onClick="sendForecast"
-            android:background="@drawable/mybutton"
-            android:layout_gravity="center_vertical|right" />
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cities"
-            android:id="@+id/button4"
-            android:onClick="openList"
-            android:background="@drawable/mybutton"
-            android:layout_gravity="center_vertical|left" />
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="About"
-            android:id="@+id/button1"
-            android:onClick="About"
-            android:background="@drawable/mybutton"
-            android:layout_gravity="bottom|left" />
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Exit"
-            android:id="@+id/button2"
-            android:onClick="Exit"
-            android:background="@drawable/mybutton"
-            android:layout_gravity="bottom|right" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_weight="1">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weather"
+                    android:id="@+id/button"
+                    android:onClick="sendMessage"
+                    android:background="@drawable/mybutton" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Forecast"
+                    android:id="@+id/button3"
+                    android:onClick="sendForecast"
+                    android:background="@drawable/mybutton" />
+                </RelativeLayout>
+                </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cities"
+                android:id="@+id/button4"
+                android:onClick="openList"
+                android:background="@drawable/mybutton" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="About"
+                android:id="@+id/button1"
+                android:onClick="About"
+                android:background="@drawable/mybutton" />
+            </RelativeLayout>
+        </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Exit"
+                android:id="@+id/button2"
+                android:onClick="Exit"
+                android:background="@drawable/mybutton" />
+        </LinearLayout>
 
-    </FrameLayout>
+    </RelativeLayout>
 
-</FrameLayout>
+</RelativeLayout>
