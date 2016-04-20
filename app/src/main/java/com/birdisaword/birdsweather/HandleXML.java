@@ -77,8 +77,12 @@ public class HandleXML {
                                     miestas = false;
                                     country = "Miestas: " + text;
                                 }
-                                else
-                                    country = "Stotelė: " + text;;
+                                else {
+                                    byte tText[] = text.getBytes("ISO-8859-1");
+                                    text = new String(tText, "UTF-8");
+                                    country = "Stotelė: " + text;
+
+                                }
                             }
                         }
 

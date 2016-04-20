@@ -64,6 +64,8 @@ public class HandleXML2 {
 
                     case XmlPullParser.END_TAG:
                         if(name.equals("neighborhood")){
+                            byte tText[] = text.getBytes("ISO-8859-1");
+                            text = new String(tText, "UTF-8");
                             Neighborhoods.add( text);
 
                         }
