@@ -45,12 +45,13 @@ public class FullscreenActivity4 extends AppCompatActivity {
             // Note that some of these constants are new as of API 16 (Jelly Bean)
             // and API 19 (KitKat). It is safe to use them, as they are inlined
             // at compile-time and do nothing on earlier devices.
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+            /*mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        */
         }
     };
     private View mControlsView;
@@ -86,7 +87,7 @@ public class FullscreenActivity4 extends AppCompatActivity {
             return false;
         }
     };
-    private HandleXML obj;
+    private HandleXML3 obj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,38 +108,59 @@ public class FullscreenActivity4 extends AppCompatActivity {
         }
 
         // Set up the user interaction to manually show or hide the system UI.
+        /*
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //toggle();
             }
         });
+        */
 
-        hide();
+        //hide();
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        /*
-        TextView TV1,TV2,TV3,TV4;
-        ImageView IM1;
-        TV1=(TextView)findViewById(R.id.textView);
-        TV2=(TextView)findViewById(R.id.textView2);
-        TV3=(TextView)findViewById(R.id.textView3);
-        TV4=(TextView)findViewById(R.id.textView4);
-        IM1=(ImageView)findViewById(R.id.imageView);
-*/
 
-        obj = new HandleXML("http://api.wunderground.com/api/f7f4c08a99ea3a7b/forecast/lang:LT/q/CA/"+city+".xml");
+        TextView days[]=new TextView[9];
+        TextView temp[]=new TextView[9];
+
+        days[0]=(TextView)findViewById(R.id.textView6);
+        days[1]=(TextView)findViewById(R.id.textView7);
+        days[2]=(TextView)findViewById(R.id.textView8);
+        days[3]=(TextView)findViewById(R.id.textView9);
+        days[4]=(TextView)findViewById(R.id.textView10);
+        days[5]=(TextView)findViewById(R.id.textView11);
+        days[6]=(TextView)findViewById(R.id.textView12);
+        days[7]=(TextView)findViewById(R.id.textView13);
+        days[8]=(TextView)findViewById(R.id.textView14);
+
+
+        temp[0]=(TextView)findViewById(R.id.textView15);
+        temp[1]=(TextView)findViewById(R.id.textView16);
+        temp[2]=(TextView)findViewById(R.id.textView17);
+        temp[3]=(TextView)findViewById(R.id.textView18);
+        temp[4]=(TextView)findViewById(R.id.textView19);
+        temp[5]=(TextView)findViewById(R.id.textView20);
+        temp[6]=(TextView)findViewById(R.id.textView21);
+        temp[7]=(TextView)findViewById(R.id.textView22);
+        temp[8]=(TextView)findViewById(R.id.textView23);
+
+
+
+
+        obj = new HandleXML3("http://api.wunderground.com/api/f7f4c08a99ea3a7b/forecast10day/lang:LT/q/CA/Kaunas.xml");
         obj.fetchXML();
 
-        /*
+
         while(obj.parsingComplete);
-        TV1.setText(obj.getCountry());
-        TV2.setText(obj.getTemperature());
-        TV3.setText(obj.getHumidity());
-        TV4.setText(obj.getWeather());
+        for(int i = 0;i<9;i++) {
+            days[i].setText(obj.getDate()[i]);
+            temp[i].setText(obj.getTemp()[i]);
+        }
+            /*
         Picasso
                 .with(this)
                 .load(obj.getIconUrl())
@@ -181,7 +203,7 @@ public class FullscreenActivity4 extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
+        //mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
